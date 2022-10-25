@@ -110,14 +110,14 @@ def read_graphfile(datadir, dataname, max_nodes=None):
         # relabeling
         mapping={}
         it=0
-        if nx.__version__<2.0:
-            for n in G.nodes():
-                mapping[n]=it
-                it+=1
-        else:
-            for n in G.nodes:
-                mapping[n]=it
-                it+=1
+#         if float(nx.__version__)<2.0:
+#             for n in G.nodes():
+#                 mapping[n]=it
+#                 it+=1
+#         else:
+        for n in G.nodes:
+            mapping[n]=it
+            it+=1
             
         # indexed from 0
         graphs.append(nx.relabel_nodes(G, mapping))
