@@ -187,6 +187,7 @@ def train(dataset, model, args, same_feat=True, val_dataset=None, test_dataset=N
     test_accs = []
     test_epochs = []
     val_accs = []
+    sum_acc = 0
 
     for epoch in range(args.num_epochs):
         total_time = 0
@@ -259,6 +260,24 @@ def train(dataset, model, args, same_feat=True, val_dataset=None, test_dataset=N
             print('Test result: ', test_result)
             test_epochs.append(test_result['epoch'])
             test_accs.append(test_result['acc'])
+     
+    
+    
+    
+    
+    
+        
+        
+        sum_acc = sum_acc + val_result['acc']
+        print('Average accuracy: ', sum_acc % (epoch+1))
+    
+    
+    
+    
+    
+    
+    
+    
     
     matplotlib.style.use('seaborn')
     plt.switch_backend('agg')
