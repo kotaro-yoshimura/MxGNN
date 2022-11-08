@@ -372,7 +372,7 @@ def benchmark_task_val(args, writer=None, feat='node-label'):
         for G in graphs:
             featgen_const.gen_node_features(G)
 
-    for i in range(10):
+    for i in range(5):
         print("****************", i)
         train_dataset, val_dataset, max_num_nodes, input_dim, assign_input_dim = \
                 cross_val.prepare_val_data(graphs, args, i, max_nodes=args.max_nodes)
@@ -419,7 +419,7 @@ def benchmark_task_val(args, writer=None, feat='node-label'):
         all_vals.append(np.array(val_accs))
         sum_best_acc = sum_best_acc + best_val_acc
         
-    ave_acc = sum_best_acc/10
+    ave_acc = sum_best_acc/5
     all_vals = np.vstack(all_vals)
     all_vals = np.mean(all_vals, axis=0)
     print(ave_acc)
