@@ -296,7 +296,7 @@ def train(dataset, model, args, same_feat=True, val_dataset=None, test_dataset=N
     plt.close()
     matplotlib.style.use('default')
 
-    return model, val_accs
+    return model, val_accs, best_val_result['acc']
 
 def prepare_data(graphs, args, test_graphs=None, max_nodes=0):
 
@@ -352,6 +352,8 @@ def prepare_data(graphs, args, test_graphs=None, max_nodes=0):
 
 def benchmark_task_val(args, writer=None, feat='node-label'):
     all_vals = []
+    sum_best_acc = 0
+    ave_acc = 0
     graphs= load_data.read_graphfile(args.datadir, args.bmname, max_nodes=args.max_nodes)
     #args.max_nodes = 600, maxnodes
     #print("maxnodes=",maxnodes),features
@@ -412,12 +414,15 @@ def benchmark_task_val(args, writer=None, feat='node-label'):
                     input_dim, args.hidden_dim, args.output_dim, args.num_classes,
                     args.num_gc_layers, bn=args.bn, dropout=args.dropout, args=args).cuda()
 
-        _, val_accs = train(train_dataset, model, args, val_dataset=val_dataset, test_dataset=None,
+        _, val_accs, best_val_acc = train(train_dataset, model, args, val_dataset=val_dataset, test_dataset=None,
                             writer=writer)
         all_vals.append(np.array(val_accs))
-
+        sum_best_acc = sum_best_acc + best_val_acc
+        
+    ave_acc = sum_best_acc/10
     all_vals = np.vstack(all_vals)
     all_vals = np.mean(all_vals, axis=0)
+    print(ave_acc)
     print(all_vals)
     print(np.max(all_vals))
     print(np.argmax(all_vals))
