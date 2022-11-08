@@ -271,7 +271,7 @@ def train(dataset, model, args, same_feat=True, val_dataset=None, test_dataset=N
         
         
         sum_acc = sum(val_accs)
-        avg_acc = sum_acc % epoch_1
+        avg_acc = sum_acc / epoch_1
         print('Average accuracy: ', avg_acc)
     
     
