@@ -192,6 +192,7 @@ def train(dataset, model, args, same_feat=True, val_dataset=None, test_dataset=N
     for epoch in range(args.num_epochs):
         total_time = 0
         avg_loss = 0.0
+        avg_acc = 0
         model.train()
         print('Epoch: ', epoch)
         for batch_idx, data in enumerate(dataset):
@@ -269,7 +270,8 @@ def train(dataset, model, args, same_feat=True, val_dataset=None, test_dataset=N
         
         
         sum_acc = sum_acc + val_result['acc']
-        print('Average accuracy: ', sum_acc % (epoch+1))
+        avg_acc = sum_acc % (epoch+1)
+        print('Average accuracy: ', avg_acc)
     
     
     
